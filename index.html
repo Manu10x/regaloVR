@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regalos</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f1f1f1;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      text-align: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    /* Título */
+    h1 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .gift-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+
+    /* Caja de regalo roja */
+    .gift-box-red {
+      width: 200px;
+      height: 200px;
+      background-color: #ff3e3e;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .gift-box-red:hover {
+      transform: scale(1.05);
+    }
+
+    .ribbon-vertical, .ribbon-horizontal {
+      position: absolute;
+      background-color: #fff;
+      z-index: 2;
+    }
+
+    .ribbon-vertical {
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 15px;
+      height: 100%;
+    }
+
+    .ribbon-horizontal {
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 15px;
+    }
+
+    .bow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70px;
+      height: 70px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 3;
+    }
+
+    .bow::before, .bow::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 20px;
+      background-color: #fff;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .bow::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    /* Caja de regalo azul */
+    .gift-box-blue {
+      width: 200px;
+      height: 200px;
+      background-color: #3e7eff;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .gift-box-blue:hover {
+      transform: scale(1.05);
+    }
+
+    /* Card para el mariachi */
+    .card {
+      display: none;
+      width: 80%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-top: -120px;
+      margin-bottom: 30px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Imagen del mariachi dentro de la card */
+    #mariachi {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      animation: heartbeat 0.8s infinite;
+    }
+
+    /* Animación para el efecto de "palpitar" */
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      20% { transform: scale(1.05); }
+      40% { transform: scale(1); }
+      60% { transform: scale(1.05); }
+      80% { transform: scale(1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Carta con el mensaje */
+    #message {
+      display: none;
+      background-color: #f8f1e5;
+      border: 1px solid #d4c29f;
+      border-radius: 10px;
+      padding: 30px;
+      margin-top: 30px;
+      width: 80%;
+      max-width: 500px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.8;
+      font-family: "Georgia", serif;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Estilos para simular una carta real */
+    #message p {
+      margin: 20px 0;
+      text-indent: 20px;
+    }
+
+    /* Animación para la apertura */
+    @keyframes openGift {
+      0% { transform: scale(1); opacity: 0; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* Botón de regresar */
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      z-index: 2;
+    }
+
+    .back-button:hover {
+      background-color: #45a049;
+    }
+
+    .back-button-outside {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      z-index: 2;
+      display: none;
+    }
+
+    .back-button-outside:hover {
+      background-color: #45a049;
+    }
+
+    /* Estilos para el modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 15px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-content h2 {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .modal-content p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .modal-content button {
+      padding: 12px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .modal-content button:hover {
+      background-color: #45a049;
+    }
+
+    /* Media Queries para pantallas pequeñas */
+    @media (max-width: 768px) {
+      .gift-box-red, .gift-box-blue {
+        width: 180px;
+        height: 180px;
+      }
+
+      h1 {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gift-box-red, .gift-box-blue {
+        width: 150px;
+        height: 150px;
+      }
+
+      h1 {
+        font-size: 16px;
+      }
+
+      .modal-content h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Modal de bienvenida -->
+  <div class="modal" id="welcome-modal">
+    <div class="modal-content">
+      <h2>¡Bienvenida!</h2>
+      <p>Ya que no te puedo dar un regalo físico, te lo doy de forma virtual. ¡Disfruta de esta sorpresa!</p>
+      <button id="close-modal">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Título de la página -->
+  <h1 id="main-title">¡Haz clic en el regalo!</h1>
+
+  <div class="gift-container">
+    <div class="gift-box-red" id="gift-box-red">
+      <div class="ribbon-vertical"></div>
+      <div class="ribbon-horizontal"></div>
+      <div class="bow"></div>
+    </div>
+
+    <div class="gift-box-blue" id="gift-box-blue">
+      <div class="ribbon-vertical"></div>
+      <div class="ribbon-horizontal"></div>
+      <div class="bow"></div>
+    </div>
+  </div>
+  
+  <div class="card" id="mariachi-card">
+    <h1 id="main-title">Te traigo una serenata virtual con mucho amor</h1>
+    <img src="mariachi.png" alt="Mariachi" id="mariachi">
+  </div>
+
+  <div id="message">
+    <p>Quiero que sepas lo increíblemente afortunado que me siento de conocerte. Eres una mujer única, con una inteligencia que ilumina cualquier lugar, y una fuerza interior que te permite enfrentar cualquier reto con valentía...</p>
+    <p>Cada momento contigo es una bendición, y me haces sentir inspirado por tu perseverancia y tu capacidad para ver lo mejor en todo. Gracias por ser tú, por tu cariño, por tu forma de ser tan especial.</p>
+    <p>¡Te admiro profundamente! ¡Espero que este regalo sea solo una pequeña muestra de lo mucho que te valoro!</p>
+  </div>
+
+  <audio id="mariachi-music" src="ElAmorMioRabito.mp3" preload="auto"></audio>
+
+  <button class="back-button-outside" id="back-button-message">Ver los demás regalos</button>
+  
+  <script>
+    window.onload = function() {
+      document.getElementById("welcome-modal").style.display = "flex";
+    }
+
+    document.getElementById("close-modal").addEventListener("click", function() {
+      document.getElementById("welcome-modal").style.display = "none";
+    });
+
+    document.getElementById("gift-box-red").addEventListener("click", function() {
+      document.getElementById("main-title").style.display = "none";
+      document.getElementById("gift-box-red").style.display = "none";
+      document.getElementById("gift-box-blue").style.display = "none";
+      document.getElementById("mariachi-card").style.display = "block";
+      document.getElementById("mariachi").style.animation = "heartbeat 0.8s infinite";
+      document.getElementById("mariachi-music").play();
+      document.getElementById("back-button-message").style.display = "block";
+    });
+
+    document.getElementById("gift-box-blue").addEventListener("click", function() {
+      document.getElementById("main-title").style.display = "none";
+      document.getElementById("gift-box-blue").style.display = "none";
+      document.getElementById("gift-box-red").style.display = "none";
+      document.getElementById("message").style.display = "block";
+      document.getElementById("back-button-message").style.display = "block";
+    });
+
+    document.getElementById("back-button-message").addEventListener("click", function() {
+      document.getElementById("gift-box-blue").style.display = "block";
+      document.getElementById("gift-box-red").style.display = "block";
+      document.getElementById("message").style.display = "none";
+      document.getElementById("mariachi-card").style.display = "none";
+      document.getElementById("mariachi-music").pause();
+      document.getElementById("mariachi-music").currentTime = 0;
+      document.getElementById("main-title").style.display = "block";
+      document.getElementById("back-button-message").style.display = "none";
+    });
+  </script>
+</body>
+</html>
