@@ -39,10 +39,11 @@
       flex-wrap: wrap;
     }
 
-    .gift-box-yellow {
+    .gift-box-yellow,
+    .gift-box-blue,
+    .gift-box-red {
       width: 200px;
       height: 200px;
-      background-color: #ff3e3e;
       position: relative;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
@@ -50,11 +51,26 @@
       transition: transform 0.3s ease-in-out;
     }
 
-    .gift-box-yellow:hover {
+    .gift-box-yellow {
+      background-color: #ff3e3e;
+    }
+
+    .gift-box-blue {
+      background-color: #3e7eff;
+    }
+
+    .gift-box-red {
+      background-color: #f0e10c;
+    }
+
+    .gift-box-yellow:hover,
+    .gift-box-blue:hover,
+    .gift-box-red:hover {
       transform: scale(1.05);
     }
 
-    .ribbon-vertical, .ribbon-horizontal {
+    .ribbon-vertical,
+    .ribbon-horizontal {
       position: absolute;
       background-color: #fff;
       z-index: 2;
@@ -89,7 +105,8 @@
       z-index: 3;
     }
 
-    .bow::before, .bow::after {
+    .bow::before,
+    .bow::after {
       content: '';
       position: absolute;
       width: 100px;
@@ -102,36 +119,6 @@
 
     .bow::after {
       transform: translate(-50%, -50%) rotate(-45deg);
-    }
-
-    .gift-box-blue {
-      width: 200px;
-      height: 200px;
-      background-color: #3e7eff;
-      position: relative;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .gift-box-blue:hover {
-      transform: scale(1.05);
-    }
-
-    .gift-box-red {
-      width: 200px;
-      height: 200px;
-      background-color: #f0e10c;
-      position: relative;
-      border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .gift-box-red:hover {
-      transform: scale(1.05);
     }
 
     .card {
@@ -169,14 +156,16 @@
       top: 10%;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 24px;
+      font-size: 16px; 
       color: white;
       font-weight: bold;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
       padding: 10px;
       background-color: rgb(0 0 0 / 20%);
       border-radius: 5px;
-      width: 69%;
+      width: 80%; 
+      max-width: 90%;
+      word-wrap: break-word; 
     }
 
     .card-mariachi {
@@ -208,7 +197,8 @@
     }
 
     #mariachi {
-      width: 388px;
+      width: 100%;
+      max-width: 388px;
       height: auto;
       margin-top: 20px;
       animation: heartbeat 4.5s ease-in-out infinite;
@@ -256,8 +246,6 @@
 
   <h1 id="main-title">Ya que no te puedo dar un regalo físico, te lo doy de forma virtual. ¡Disfruta de esta sorpresa!</h1>
 
-  
-
   <div class="gift-container">
     <div class="gift-box-yellow" id="gift-box-yellow">
       <div class="ribbon-vertical"></div>
@@ -282,7 +270,8 @@
     <h1>Canción de mi autoría, espero que te guste</h1>
     <div id="flower-container">
       <img src="flor.gif" alt="Flor" id="flower">
-      <div id="flower-text">Caminaba sin pensar,con mi mente en otra dirección,sin saber que iba a encontrar,algo que cambiara el corazón.La vida me dio un giro fugaz,como un viento que nunca vi,y de pronto, sin avisar,tu mirada me hizo feliz.Me enamoré sin esperarlo,sin planes...</div>
+      <div id="flower-text">Caminaba sin pensar, con mi mente en otra dirección, sin saber que iba a encontrar, algo que cambiara el corazón. La vida me dio un giro fugaz, como un viento que nunca vi, y de pronto, sin avisar, tu mirada me hizo feliz. Me enamoré sin esperarlo, sin planes...</div>
+   
     </div>
   </div>
 
@@ -297,7 +286,6 @@
    <p>Cada momento contigo es una bendición, y me haces sentir inspirado por tu perseverancia y tu capacidad para ver lo mejor en todo. Gracias por ser tú, por tu cariño, por tu forma de ser tan especial.</p>
    <p>¡Te admiro profundamente! ¡Espero que este regalo sea solo una pequeña muestra de lo mucho que te valoro!</p>
  </div>
-
   <audio id="flor-audio" src="UnSuspiroMeAtrapo.m4a" preload="auto"></audio>
   <audio id="mariachi-music" src="ElAmorMioRabito.mp3" preload="auto"></audio>
 
