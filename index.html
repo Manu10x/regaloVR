@@ -41,6 +41,7 @@
 
     .gift-box-yellow,
     .gift-box-blue,
+    .gift-box-rosa,
     .gift-box-red {
       width: 200px;
       height: 200px;
@@ -59,12 +60,17 @@
       background-color: #3e7eff;
     }
 
+    .gift-box-rosa {
+      background-color: #ff3ec5;
+    }
+
     .gift-box-red {
       background-color: #f0e10c;
     }
 
     .gift-box-yellow:hover,
     .gift-box-blue:hover,
+    .gift-box-rosa:hover,
     .gift-box-red:hover {
       transform: scale(1.05);
     }
@@ -179,21 +185,11 @@
     }
 
     @keyframes heartbeat {
-      0% {
-        transform: scale(1);
-      }
-      25% {
-        transform: scale(1.1);
-      }
-      50% {
-        transform: scale(1);
-      }
-      75% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
+      0% { transform: scale(1); }
+      25% { transform: scale(1.1); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     #mariachi {
@@ -204,7 +200,8 @@
       animation: heartbeat 4.5s ease-in-out infinite;
     }
 
-    #message {
+    #message,
+    #message-rosa {
       display: none;
       background-color: #f8f1e5;
       border: 1px solid #d4c29f;
@@ -240,6 +237,68 @@
     .back-button:hover {
       background-color: #45a049;
     }
+
+    /* RESPONSIVE DESIGN */
+    @media screen and (max-width: 768px) {
+      h1 {
+        font-size: 20px;
+      }
+
+      .gift-box-yellow,
+      .gift-box-blue,
+      .gift-box-rosa,
+      .gift-box-red {
+        width: 150px;
+        height: 150px;
+      }
+
+      .bow {
+        width: 50px;
+        height: 50px;
+      }
+
+      .bow::before,
+      .bow::after {
+        width: 70px;
+        height: 15px;
+      }
+
+      #flower-text {
+        font-size: 14px;
+        width: 90%;
+      }
+
+      .back-button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .gift-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .gift-box-yellow,
+      .gift-box-blue,
+      .gift-box-rosa,
+      .gift-box-red {
+        width: 130px;
+        height: 130px;
+      }
+
+      .bow {
+        width: 40px;
+        height: 40px;
+      }
+
+      .bow::before,
+      .bow::after {
+        width: 50px;
+        height: 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -259,6 +318,12 @@
       <div class="bow"></div>
     </div>
 
+    <div class="gift-box-rosa" id="gift-box-rosa">
+      <div class="ribbon-vertical"></div>
+      <div class="ribbon-horizontal"></div>
+      <div class="bow"></div>
+    </div>
+
     <div class="gift-box-red" id="gift-box-red">
       <div class="ribbon-vertical"></div>
       <div class="ribbon-horizontal"></div>
@@ -271,7 +336,6 @@
     <div id="flower-container">
       <img src="flor.gif" alt="Flor" id="flower">
       <div id="flower-text">Caminaba sin pensar, con mi mente en otra dirección, sin saber que iba a encontrar, algo que cambiara el corazón. La vida me dio un giro fugaz, como un viento que nunca vi, y de pronto, sin avisar, tu mirada me hizo feliz. Me enamoré sin esperarlo, sin planearlo...</div>
-   
     </div>
   </div>
 
@@ -282,21 +346,28 @@
 
   <div id="message">
     <h1 id="main-title">Una carta para ti</h1>
-   <p>Quiero que sepas lo increíblemente afortunado que me siento de conocerte. Eres una mujer única, con una inteligencia que ilumina cualquier lugar, y una fuerza interior que te permite enfrentar cualquier reto con valentía...</p>
-   <p>Cada momento contigo es una bendición, y me haces sentir inspirado por tu perseverancia y tu capacidad para ver lo mejor en todo. Gracias por ser tú, por tu cariño, por tu forma de ser tan especial.</p>
-   <p>¡Te admiro profundamente! ¡Espero que este regalo sea solo una pequeña muestra de lo mucho que te valoro!</p>
- </div>
+    <p>Quiero que sepas lo increíblemente afortunado que me siento de conocerte. Eres una mujer única, con una inteligencia que ilumina cualquier lugar, y una fuerza interior que te permite enfrentar cualquier reto con valentía...</p>
+    <p>Cada momento contigo es una bendición, y me haces sentir inspirado por tu perseverancia y tu capacidad para ver lo mejor en todo. Gracias por ser tú, por tu cariño, por tu forma de ser tan especial.</p>
+    <p>¡Te admiro profundamente! ¡Espero que este regalo sea solo una pequeña muestra de lo mucho que te valoro!</p>
+  </div>
+
+  <div id="message-rosa">
+    <h1 id="main-title">Una carta para ti</h1>
+    <p>Te voy a esperar hasta el fin del mundo. Porque te extraño con una intensidad que ni las palabras pueden explicar. La distancia duele, sí… </p>
+    <p>pero no cambia lo que siento por ti. Cada kilómetro entre nosotros solo me recuerda cuánto deseo estar a tu lado. Y aunque pasen los días, los meses o los años… yo te sigo esperando, con el corazón en tus manos</p>
+  </div>
+
   <audio id="flor-audio" src="UnSuspiroMeAtrapo.m4a" preload="auto"></audio>
   <audio id="mariachi-music" src="ElAmorMioRabito.mp3" preload="auto"></audio>
 
   <button class="back-button" id="back-button-message" style="display: none;">Ver los demás regalos</button>
 
   <script>
-    // Cuando se hace clic en un regalo
     document.getElementById("gift-box-red").addEventListener("click", function() {
       document.getElementById("main-title").style.display = "none";
       document.getElementById("gift-box-red").style.display = "none";
       document.getElementById("gift-box-blue").style.display = "none";
+      document.getElementById("gift-box-rosa").style.display = "none";
       document.getElementById("gift-box-yellow").style.display = "none"; 
       document.getElementById("flower-card").style.display = "block";
       document.getElementById("flor-audio").play();
@@ -307,8 +378,19 @@
       document.getElementById("main-title").style.display = "none";
       document.getElementById("gift-box-red").style.display = "none";
       document.getElementById("gift-box-blue").style.display = "none";
+      document.getElementById("gift-box-rosa").style.display = "none";
       document.getElementById("gift-box-yellow").style.display = "none"; 
       document.getElementById("message").style.display = "block";
+      document.getElementById("back-button-message").style.display = "block";
+    });
+
+    document.getElementById("gift-box-rosa").addEventListener("click", function() {
+      document.getElementById("main-title").style.display = "none";
+      document.getElementById("gift-box-red").style.display = "none";
+      document.getElementById("gift-box-blue").style.display = "none";
+      document.getElementById("gift-box-rosa").style.display = "none";
+      document.getElementById("gift-box-yellow").style.display = "none"; 
+      document.getElementById("message-rosa").style.display = "block";
       document.getElementById("back-button-message").style.display = "block";
     });
 
@@ -316,6 +398,7 @@
       document.getElementById("main-title").style.display = "none";
       document.getElementById("gift-box-red").style.display = "none";
       document.getElementById("gift-box-blue").style.display = "none";
+      document.getElementById("gift-box-rosa").style.display = "none";
       document.getElementById("gift-box-yellow").style.display = "none"; 
       document.getElementById("mariachi-card").style.display = "block";
       document.getElementById("mariachi-music").play();
@@ -326,6 +409,5 @@
       location.reload();
     });
   </script>
-
 </body>
 </html>
