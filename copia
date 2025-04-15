@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regalos</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f1f1f1;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      text-align: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .gift-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+    }
+
+    .gift-box-yellow,
+    .gift-box-blue,
+    .gift-box-red {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .gift-box-yellow {
+      background-color: #ff3e3e;
+    }
+
+    .gift-box-blue {
+      background-color: #3e7eff;
+    }
+
+    .gift-box-red {
+      background-color: #f0e10c;
+    }
+
+    .gift-box-yellow:hover,
+    .gift-box-blue:hover,
+    .gift-box-red:hover {
+      transform: scale(1.05);
+    }
+
+    .ribbon-vertical,
+    .ribbon-horizontal {
+      position: absolute;
+      background-color: #fff;
+      z-index: 2;
+    }
+
+    .ribbon-vertical {
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 15px;
+      height: 100%;
+    }
+
+    .ribbon-horizontal {
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 15px;
+    }
+
+    .bow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70px;
+      height: 70px;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 3;
+    }
+
+    .bow::before,
+    .bow::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 20px;
+      background-color: #fff;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .bow::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .card {
+      display: none;
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-top: -120px;
+      margin-bottom: 30px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #flower-container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+    }
+
+    #flower {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    #flower-text {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 16px; 
+      color: white;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      background-color: rgb(0 0 0 / 20%);
+      border-radius: 5px;
+      width: 80%; 
+      max-width: 90%;
+      word-wrap: break-word; 
+    }
+
+    .card-mariachi {
+      display: none;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    @keyframes heartbeat {
+      0% {
+        transform: scale(1);
+      }
+      25% {
+        transform: scale(1.1);
+      }
+      50% {
+        transform: scale(1);
+      }
+      75% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    #mariachi {
+      width: 100%;
+      max-width: 388px;
+      height: auto;
+      margin-top: 20px;
+      animation: heartbeat 4.5s ease-in-out infinite;
+    }
+
+    #message {
+      display: none;
+      background-color: #f8f1e5;
+      border: 1px solid #d4c29f;
+      border-radius: 10px;
+      padding: 30px;
+      margin-top: 30px;
+      width: 80%;
+      max-width: 500px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      font-size: 16px;
+      line-height: 1.8;
+      font-family: "Georgia", serif;
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      z-index: 2;
+    }
+
+    .back-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="main-title"> TE EXTRAÑO MUCHO </h1>
+
+  <div class="gift-container">
+    <div class="gift-box-yellow" id="gift-box-yellow">
+      <div class="ribbon-vertical"></div>
+      <div class="ribbon-horizontal"></div>
+      <div class="bow"></div>
+    </div>
+
+    <div class="gift-box-blue" id="gift-box-blue">
+      <div class="ribbon-vertical"></div>
+      <div class="ribbon-horizontal"></div>
+      <div class="bow"></div>
+    </div>
+
+    <div class="gift-box-red" id="gift-box-red">
+      <div class="ribbon-vertical"></div>
+      <div class="ribbon-horizontal"></div>
+      <div class="bow"></div>
+    </div>
+  </div>
+
+  <div class="card" id="flower-card">
+    <h1>Canción de mi autoría, espero que te guste</h1>
+    <div id="flower-container">
+      <img src="flor.gif" alt="Flor" id="flower">
+      <div id="flower-text">Caminaba sin pensar, con mi mente en otra dirección, sin saber que iba a encontrar, algo que cambiara el corazón. La vida me dio un giro fugaz, como un viento que nunca vi, y de pronto, sin avisar, tu mirada me hizo feliz. Me enamoré sin esperarlo, sin planearlo...</div>
+   
+    </div>
+  </div>
+
+  <div class="card-mariachi" id="mariachi-card">
+    <h1>Te traigo una serenata virtual con mucho amor</h1>
+    <img src="mariachi.png" alt="Mariachi" id="mariachi">
+  </div>
+
+  <div id="message">
+    <h1 id="main-title">Una carta para ti</h1>
+   <p>Quiero que sepas lo increíblemente afortunado que me siento de conocerte. Eres una mujer única, con una inteligencia que ilumina cualquier lugar, y una fuerza interior que te permite enfrentar cualquier reto con valentía...</p>
+   <p>Cada momento contigo es una bendición, y me haces sentir inspirado por tu perseverancia y tu capacidad para ver lo mejor en todo. Gracias por ser tú, por tu cariño, por tu forma de ser tan especial.</p>
+   <p>¡Te admiro profundamente! ¡Espero que este regalo sea solo una pequeña muestra de lo mucho que te valoro!</p>
+ </div>
+  <audio id="flor-audio" src="UnSuspiroMeAtrapo.m4a" preload="auto"></audio>
+  <audio id="mariachi-music" src="ElAmorMioRabito.mp3" preload="auto"></audio>
+
+  <button class="back-button" id="back-button-message" style="display: none;">Ver los demás regalos</button>
+
+  <script>
+    // Cuando se hace clic en un regalo
+    document.getElementById("gift-box-red").addEventListener("click", function() {
+      document.getElementById("main-title").style.display = "none";
+      document.getElementById("gift-box-red").style.display = "none";
+      document.getElementById("gift-box-blue").style.display = "none";
+      document.getElementById("gift-box-yellow").style.display = "none"; 
+      document.getElementById("flower-card").style.display = "block";
+      document.getElementById("flor-audio").play();
+      document.getElementById("back-button-message").style.display = "block";
+    });
+
+    document.getElementById("gift-box-blue").addEventListener("click", function() {
+      document.getElementById("main-title").style.display = "none";
+      document.getElementById("gift-box-red").style.display = "none";
+      document.getElementById("gift-box-blue").style.display = "none";
+      document.getElementById("gift-box-yellow").style.display = "none"; 
+      document.getElementById("message").style.display = "block";
+      document.getElementById("back-button-message").style.display = "block";
+    });
+
+    document.getElementById("gift-box-yellow").addEventListener("click", function() {
+      document.getElementById("main-title").style.display = "none";
+      document.getElementById("gift-box-red").style.display = "none";
+      document.getElementById("gift-box-blue").style.display = "none";
+      document.getElementById("gift-box-yellow").style.display = "none"; 
+      document.getElementById("mariachi-card").style.display = "block";
+      document.getElementById("mariachi-music").play();
+      document.getElementById("back-button-message").style.display = "block";
+    });
+
+    document.getElementById("back-button-message").addEventListener("click", function() {
+      location.reload();
+    });
+  </script>
+
+</body>
+</html>
